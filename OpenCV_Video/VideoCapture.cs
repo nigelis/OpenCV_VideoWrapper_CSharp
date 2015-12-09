@@ -33,7 +33,7 @@ namespace OpenCV_Video
         BufferSize = 38
     }
 
-    public class VideoCapture
+    public class VideoCapture : IDisposable
     {
         /// <summary>
         /// DLL Location.
@@ -64,6 +64,11 @@ namespace OpenCV_Video
         public void Release()
         {
             
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
 
         private int _handle;
