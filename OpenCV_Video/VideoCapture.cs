@@ -40,7 +40,35 @@ namespace OpenCV_Video
         /// </summary>
         private const string DllLocation = "VideoWrapper.dll";
 
-#region Related Dll Import
+        public VideoCapture()
+        {
+            _handle = 0x0000;
+        }
+
+        /// <summary>
+        /// Open a specified video file.
+        /// </summary>
+        /// <param name="filename">video file path.</param>
+        /// <returns>true = success.</returns>
+        public bool Open(string filename)
+        {
+            if (_handle!=0x0000) Release();
+
+            _handle = VideoCapture_Open(filename);
+            return _handle != 0x0000;
+        }
+
+        /// <summary>
+        /// release current unmanaged resource.
+        /// </summary>
+        public void Release()
+        {
+            
+        }
+
+        private int _handle;
+
+        #region Related Dll Import
 
         [DllImport(DllLocation, EntryPoint = "_VideoCapture_Get@8")]
         private static extern double VideoCapure_Get(int handle, int propId);
@@ -60,8 +88,6 @@ namespace OpenCV_Video
         [DllImport(DllLocation, EntryPoint = "_VideoCapture_Read@20")]
         private static extern bool VideoCapture_Read(int handle, [MarshalAs(UnmanagedType.LPArray)] byte[] frameData,
             ref int frameLength, int expectedWidth, int expectedHeight);
-
- 
-#endregion
+        #endregion
     }
 }
